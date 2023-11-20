@@ -1,0 +1,35 @@
+import nltk
+from nltk import word_tokenize, pos_tag
+from nltk.probability import FreqDist
+from nltk.corpus import brown
+
+# Download the Brown Corpus for training data (if not already downloaded)
+nltk.download('brown')
+
+# Train the model on the Brown Corpus
+brown_corpus_words = brown.words()
+brown_corpus_tags = brown.tagged_words()
+fd = FreqDist(brown_corpus_tags)
+
+# Define a simple stochastic part-of-speech tagging function
+def stochastic_pos_tag(sentence):
+    words = word_tokenize(sentence)
+    tagged_words = pos_tag(words)
+    
+    for i in range(len(tagged_words)):
+        word = tagged_words[i][0]
+        pos_tags = [tag for tag, freq in fd.most_common() if tag[0] == word]
+        
+        if pos_tags:
+            # Assign the most probable part-of-speech tag
+            tagged_words[i] = (word, pos_tags[0][1])
+        else:
+            # If the word is not found in the training data, assign a default tag
+            tagged_words[i] = (word, 'NN')  # Default to Noun
+    
+    return tagged_words
+
+# Example usage:
+text = "the red car stopped at the traffic light"
+result = stochastic_pos_tag(text)
+print(result)
