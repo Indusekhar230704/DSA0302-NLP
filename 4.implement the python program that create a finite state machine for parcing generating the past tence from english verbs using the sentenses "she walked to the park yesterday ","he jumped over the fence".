@@ -1,0 +1,45 @@
+class VerbStateMachine:
+    def __init__(self):
+        # Define states
+        self.states = ['start', 'base', 'ed']
+
+        # Define transitions
+        self.transitions = {
+            'start': {'walk': 'walked', 'jump': 'jumped'},
+            'base': {},
+            'ed': {}
+        }
+
+    def generate_past_tense(self, sentence):
+        words = sentence.split()
+        current_state = 'start'
+        result = []
+
+        for word in words:
+            if current_state == 'start':
+                if word.lower() in self.transitions['start']:
+                    result.append(self.transitions['start'][word.lower()])
+                    current_state = 'ed'
+                else:
+                    result.append(word)
+            elif current_state == 'ed':
+                result.append(word)
+
+        return ' '.join(result)
+
+# Example usage
+def main():
+    fsm = VerbStateMachine()
+
+    sentence1 = "she walket to the park yesterday"
+    past_tense1 = fsm.generate_past_tense(sentence1)
+    print(f"Original: {sentence1}")
+    print(f"Past Tense: {past_tense1}")
+
+    sentence2 = "he jumped over the fence"
+    past_tense2 = fsm.generate_past_tense(sentence2)
+    print(f"\nOriginal: {sentence2}")
+    print(f"Past Tense: {past_tense2}")
+
+if __name__ == "__main__":
+    main()
