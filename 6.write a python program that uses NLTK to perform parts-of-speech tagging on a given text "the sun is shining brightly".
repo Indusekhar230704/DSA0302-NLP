@@ -1,77 +1,20 @@
-{
-  "nbformat": 4,
-  "nbformat_minor": 0,
-  "metadata": {
-    "colab": {
-      "provenance": [],
-      "authorship_tag": "ABX9TyNE+jiqkmDGvWsBL0y2BDcE"
-    },
-    "kernelspec": {
-      "name": "python3",
-      "display_name": "Python 3"
-    },
-    "language_info": {
-      "name": "python"
-    }
-  },
-  "cells": [
-    {
-      "cell_type": "code",
-      "source": [
-        "\n",
-        "import nltk\n",
-        "\n",
-        "# Download NLTK data (if not already downloaded)\n",
-        "nltk.download('punkt')\n",
-        "nltk.download('averaged_perceptron_tagger')\n",
-        "\n",
-        "# Sample text for POS tagging\n",
-        "text = \"I love reading  intresting books.\"\n",
-        "text =\"the sun is shinning brightly\"\n",
-        "\n",
-        "# Tokenize the text into words\n",
-        "words = nltk.word_tokenize(text)\n",
-        "\n",
-        "# Perform POS tagging\n",
-        "pos_tags = nltk.pos_tag(words)\n",
-        "\n",
-        "# Print the POS-tagged words\n",
-        "for word, pos_tag in pos_tags:\n",
-        "    print(f\"{word}: {pos_tag}\")\n"
-      ],
-      "metadata": {
-        "colab": {
-          "base_uri": "https://localhost:8080/"
-        },
-        "id": "zS21QUHl7rtU",
-        "outputId": "137b340e-1a44-4c9a-bbc6-bf9bab568d49"
-      },
-      "execution_count": 5,
-      "outputs": [
-        {
-          "output_type": "stream",
-          "name": "stdout",
-          "text": [
-            "the: DT\n",
-            "sun: NN\n",
-            "is: VBZ\n",
-            "shinning: VBG\n",
-            "brightly: RB\n"
-          ]
-        },
-        {
-          "output_type": "stream",
-          "name": "stderr",
-          "text": [
-            "[nltk_data] Downloading package punkt to /root/nltk_data...\n",
-            "[nltk_data]   Package punkt is already up-to-date!\n",
-            "[nltk_data] Downloading package averaged_perceptron_tagger to\n",
-            "[nltk_data]     /root/nltk_data...\n",
-            "[nltk_data]   Package averaged_perceptron_tagger is already up-to-\n",
-            "[nltk_data]       date!\n"
-          ]
-        }
-      ]
-    }
-  ]
-}
+
+import nltk
+
+# Download NLTK data (if not already downloaded)
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+
+# Sample text for POS tagging
+text = "I love reading  intresting books."
+text ="the sun is shinning brightly"
+
+# Tokenize the text into words
+words = nltk.word_tokenize(text)
+
+# Perform POS tagging
+pos_tags = nltk.pos_tag(words)
+
+# Print the POS-tagged words
+for word, pos_tag in pos_tags:
+    print(f"{word}: {pos_tag}")
