@@ -1,0 +1,64 @@
+
+Open In Colab
+
+pip install transformers
+     
+Requirement already satisfied: transformers in /usr/local/lib/python3.10/dist-packages (4.35.2)
+Requirement already satisfied: filelock in /usr/local/lib/python3.10/dist-packages (from transformers) (3.13.1)
+Requirement already satisfied: huggingface-hub<1.0,>=0.16.4 in /usr/local/lib/python3.10/dist-packages (from transformers) (0.19.3)
+Requirement already satisfied: numpy>=1.17 in /usr/local/lib/python3.10/dist-packages (from transformers) (1.23.5)
+Requirement already satisfied: packaging>=20.0 in /usr/local/lib/python3.10/dist-packages (from transformers) (23.2)
+Requirement already satisfied: pyyaml>=5.1 in /usr/local/lib/python3.10/dist-packages (from transformers) (6.0.1)
+Requirement already satisfied: regex!=2019.12.17 in /usr/local/lib/python3.10/dist-packages (from transformers) (2023.6.3)
+Requirement already satisfied: requests in /usr/local/lib/python3.10/dist-packages (from transformers) (2.31.0)
+Requirement already satisfied: tokenizers<0.19,>=0.14 in /usr/local/lib/python3.10/dist-packages (from transformers) (0.15.0)
+Requirement already satisfied: safetensors>=0.3.1 in /usr/local/lib/python3.10/dist-packages (from transformers) (0.4.0)
+Requirement already satisfied: tqdm>=4.27 in /usr/local/lib/python3.10/dist-packages (from transformers) (4.66.1)
+Requirement already satisfied: fsspec>=2023.5.0 in /usr/local/lib/python3.10/dist-packages (from huggingface-hub<1.0,>=0.16.4->transformers) (2023.6.0)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in /usr/local/lib/python3.10/dist-packages (from huggingface-hub<1.0,>=0.16.4->transformers) (4.5.0)
+Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.10/dist-packages (from requests->transformers) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.10/dist-packages (from requests->transformers) (3.4)
+Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.10/dist-packages (from requests->transformers) (2.0.7)
+Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.10/dist-packages (from requests->transformers) (2023.7.22)
+
+from transformers import pipeline, GPT2Tokenizer, GPT2LMHeadModel
+
+def generate_abstractive_summary(text):
+    # Load pre-trained GPT-2 model and tokenizer
+    model_name = "gpt2"
+    model = GPT2LMHeadModel.from_pretrained(model_name)
+    tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+
+    # Tokenize and generate summary using GPT-2
+    inputs = tokenizer(text, return_tensors="pt", max_length=1024, truncation=True)
+    summary_ids = model.generate(inputs["input_ids"], max_length=150, length_penalty=2.0, num_beams=4, early_stopping=True)
+    summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+
+    return summary
+
+# Example text
+input_text = "The World Health Organization (WHO) plays a vital role in global health. WHO is headquartered in Geneva, Switzerland, and it is responsible for coordinating international efforts to control and prevent the spread of diseases? Its mission is to promote and protect the health of people worldwide."
+
+# Generate and print abstractive summary
+summary = generate_abstractive_summary(input_text)
+print(summary)
+
+     
+config.json:   0%|          | 0.00/665 [00:00<?, ?B/s]
+model.safetensors:   0%|          | 0.00/548M [00:00<?, ?B/s]
+generation_config.json:   0%|          | 0.00/124 [00:00<?, ?B/s]
+vocab.json:   0%|          | 0.00/1.04M [00:00<?, ?B/s]
+merges.txt:   0%|          | 0.00/456k [00:00<?, ?B/s]
+tokenizer.json:   0%|          | 0.00/1.36M [00:00<?, ?B/s]
+The attention mask and the pad token id were not set. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+Setting `pad_token_id` to `eos_token_id`:50256 for open-end generation.
+The World Health Organization (WHO) plays a vital role in global health. WHO is headquartered in Geneva, Switzerland, and it is responsible for coordinating international efforts to control and prevent the spread of diseases? Its mission is to promote and protect the health of people worldwide.
+
+The World Health Organization (WHO) plays a vital role in global health. WHO is headquartered in Geneva, Switzerland, and it is responsible for coordinating international efforts to control and prevent the spread of diseases? Its mission is to promote and protect the health of people worldwide. The World Health Organization (WHO) is responsible for coordinating international efforts to control and prevent the spread of diseases? Its mission is to promote and protect the health of people worldwide. The World Health Organization (WHO)
+
+
+
+     
+
+
+     
