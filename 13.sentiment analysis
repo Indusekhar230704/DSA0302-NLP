@@ -1,0 +1,44 @@
+
+Open In Colab
+
+pip install textblob
+     
+Requirement already satisfied: textblob in /usr/local/lib/python3.10/dist-packages (0.17.1)
+Requirement already satisfied: nltk>=3.1 in /usr/local/lib/python3.10/dist-packages (from textblob) (3.8.1)
+Requirement already satisfied: click in /usr/local/lib/python3.10/dist-packages (from nltk>=3.1->textblob) (8.1.7)
+Requirement already satisfied: joblib in /usr/local/lib/python3.10/dist-packages (from nltk>=3.1->textblob) (1.3.2)
+Requirement already satisfied: regex>=2021.8.3 in /usr/local/lib/python3.10/dist-packages (from nltk>=3.1->textblob) (2023.6.3)
+Requirement already satisfied: tqdm in /usr/local/lib/python3.10/dist-packages (from nltk>=3.1->textblob) (4.66.1)
+
+from textblob import TextBlob
+
+def analyze_sentiment(text):
+    # Create a TextBlob object
+    blob = TextBlob(text)
+
+    # Get the sentiment polarity
+    polarity = blob.sentiment.polarity
+
+    # Classify the sentiment based on polarity
+    if polarity > 0:
+        return "Positive"
+    elif polarity < 0:
+        return "Negative"
+    else:
+        return "Neutral"
+
+# Example sentences
+sentence1 = "I love this product! It's amazing."
+sentence2 = "The weather is terrible today."
+
+# Analyze sentiment for each sentence
+result1 = analyze_sentiment(sentence1)
+result2 = analyze_sentiment(sentence2)
+
+# Print results
+print(f"Sentence 1: {result1}")
+print(f"Sentence 2: {result2}")
+
+     
+Sentence 1: Positive
+Sentence 2: Negative
